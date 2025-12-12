@@ -1,1 +1,142 @@
-
+[
+  {
+    "id": 1,
+    "word": "mitigate",
+    "pos": "v",
+    "meaning": "〜を和らげる、軽減する",
+    "example": "New environmental policies aim to mitigate the impact of climate change."
+  },
+  {
+    "id": 2,
+    "word": "scrutinize",
+    "pos": "v",
+    "meaning": "〜を精査する",
+    "example": "Researchers must scrutinize the data carefully before publishing their findings."
+  },
+  {
+    "id": 3,
+    "word": "advocate",
+    "pos": "v",
+    "meaning": "〜を主張する、支持する",
+    "example": "Many scientists advocate using renewable energy to reduce emissions."
+  },
+  {
+    "id": 4,
+    "word": "plausible",
+    "pos": "adj",
+    "meaning": "もっともらしい、妥当な",
+    "example": "The hypothesis seemed plausible, but further testing was required."
+  },
+  {
+    "id": 5,
+    "word": "compromise",
+    "pos": "v",
+    "meaning": "妥協する；（信用などを）損なう",
+    "example": "The team reached an agreement without compromising their core values."
+  },
+  {
+    "id": 6,
+    "word": "deteriorate",
+    "pos": "v",
+    "meaning": "悪化する",
+    "example": "The patient's condition began to deteriorate rapidly."
+  },
+  {
+    "id": 7,
+    "word": "subsequent",
+    "pos": "adj",
+    "meaning": "その後の、続いて起こる",
+    "example": "Subsequent studies confirmed the original results."
+  },
+  {
+    "id": 8,
+    "word": "ambiguous",
+    "pos": "adj",
+    "meaning": "曖昧な、どちらとも取れる",
+    "example": "The instructions were ambiguous and caused confusion among participants."
+  },
+  {
+    "id": 9,
+    "word": "undermine",
+    "pos": "v",
+    "meaning": "〜を弱体化させる、損なう",
+    "example": "Leaking confidential documents can undermine public trust."
+  },
+  {
+    "id": 10,
+    "word": "coherent",
+    "pos": "adj",
+    "meaning": "一貫した、論理的な",
+    "example": "Her presentation was both coherent and persuasive."
+  },
+  {
+    "id": 11,
+    "word": "inevitable",
+    "pos": "adj",
+    "meaning": "避けられない、必然的な",
+    "example": "If no action is taken, severe consequences will be inevitable."
+  },
+  {
+    "id": 12,
+    "word": "adjacent",
+    "pos": "adj",
+    "meaning": "隣接した",
+    "example": "The hotel is adjacent to a large shopping mall."
+  },
+  {
+    "id": 13,
+    "word": "discrepancy",
+    "pos": "n",
+    "meaning": "不一致、矛盾",
+    "example": "There was a noticeable discrepancy between the reported data and the actual figures."
+  },
+  {
+    "id": 14,
+    "word": "preliminary",
+    "pos": "adj",
+    "meaning": "予備的な、仮の",
+    "example": "Preliminary tests indicated the device was safe for use."
+  },
+  {
+    "id": 15,
+    "word": "rationale",
+    "pos": "n",
+    "meaning": "根拠、基本的理由",
+    "example": "The rationale behind the policy was clearly explained in the document."
+  },
+  {
+    "id": 16,
+    "word": "alleviate",
+    "pos": "v",
+    "meaning": "〜を軽減する、緩和する",
+    "example": "The new system is designed to alleviate the workload of medical staff."
+  },
+  {
+    "id": 17,
+    "word": "contemplate",
+    "pos": "v",
+    "meaning": "〜を熟考する",
+    "example": "She spent hours contemplating possible solutions to the issue."
+  },
+  {
+    "id": 18,
+    "word": "indispensable",
+    "pos": "adj",
+    "meaning": "不可欠な",
+    "example": "Water is indispensable for all living organisms."
+  },
+  {
+    "id": 19,
+    "word": "manifest",
+    "pos": "v",
+    "meaning": "〜を明らかにする、表す",
+    "example": "The symptoms typically manifest within 24 hours."
+  },
+  {
+    "id": 20,
+    "word": "viable",
+    "pos": "adj",
+    "meaning": "実行可能な、成功の見込みがある",
+    "example": "The committee evaluated whether the proposal was financially viable."
+  }
+]
