@@ -1,1 +1,142 @@
-
+[
+  {
+    "id": 1,
+    "word": "restore",
+    "pos": "v",
+    "meaning": "〜を回復させる",
+    "example": "The government aims to restore public confidence by increasing transparency."
+  },
+  {
+    "id": 2,
+    "word": "affordable",
+    "pos": "adj",
+    "meaning": "手頃な価格の",
+    "example": "Many students choose affordable housing options near the university campus."
+  },
+  {
+    "id": 3,
+    "word": "distribution",
+    "pos": "n",
+    "meaning": "配布、流通",
+    "example": "The distribution of resources depends on the needs of each department."
+  },
+  {
+    "id": 4,
+    "word": "attempt",
+    "pos": "v",
+    "meaning": "〜を試みる",
+    "example": "The team attempted to solve the issue before the deadline arrived."
+  },
+  {
+    "id": 5,
+    "word": "efficient",
+    "pos": "adj",
+    "meaning": "効率的な",
+    "example": "Using updated software makes the entire process much more efficient."
+  },
+  {
+    "id": 6,
+    "word": "interpret",
+    "pos": "v",
+    "meaning": "〜を解釈する",
+    "example": "Different cultures may interpret the same gesture in various ways."
+  },
+  {
+    "id": 7,
+    "word": "decline",
+    "pos": "v",
+    "meaning": "〜を断る／減少する",
+    "example": "The company declined the offer because the terms were not suitable."
+  },
+  {
+    "id": 8,
+    "word": "initial",
+    "pos": "adj",
+    "meaning": "初期の、最初の",
+    "example": "Her initial reaction was surprise, but she quickly understood the situation."
+  },
+  {
+    "id": 9,
+    "word": "component",
+    "pos": "n",
+    "meaning": "構成要素",
+    "example": "Each component of the machine must be checked regularly for safety."
+  },
+  {
+    "id": 10,
+    "word": "expand",
+    "pos": "v",
+    "meaning": "〜を拡大する",
+    "example": "The company plans to expand its service area next year."
+  },
+  {
+    "id": 11,
+    "word": "moderate",
+    "pos": "adj",
+    "meaning": "適度な、節度ある",
+    "example": "Experts recommend moderate exercise several times a week for good health."
+  },
+  {
+    "id": 12,
+    "word": "conduct",
+    "pos": "v",
+    "meaning": "〜を実施する",
+    "example": "The researchers conducted a survey to gather feedback from participants."
+  },
+  {
+    "id": 13,
+    "word": "precise",
+    "pos": "adj",
+    "meaning": "正確な",
+    "example": "The instructions must be precise so that no mistakes occur."
+  },
+  {
+    "id": 14,
+    "word": "justify",
+    "pos": "v",
+    "meaning": "〜を正当化する",
+    "example": "The manager asked them to justify the additional budget request."
+  },
+  {
+    "id": 15,
+    "word": "relief",
+    "pos": "n",
+    "meaning": "安堵、安心",
+    "example": "It was a relief to hear that the exam results were better than expected."
+  },
+  {
+    "id": 16,
+    "word": "generate",
+    "pos": "v",
+    "meaning": "〜を生み出す",
+    "example": "The new marketing strategy is expected to generate more customer interest."
+  },
+  {
+    "id": 17,
+    "word": "substitute",
+    "pos": "n",
+    "meaning": "代用品、代替物",
+    "example": "Plant-based milk has become a common substitute for dairy products."
+  },
+  {
+    "id": 18,
+    "word": "accurate",
+    "pos": "adj",
+    "meaning": "正確な",
+    "example": "Make sure the information you submit is accurate and up-to-date."
+  },
+  {
+    "id": 19,
+    "word": "stable",
+    "pos": "adj",
+    "meaning": "安定した",
+    "example": "Her performance has remained stable throughout the semester."
+  },
+  {
+    "id": 20,
+    "word": "assumption",
+    "pos": "n",
+    "meaning": "仮定、前提",
+    "example": "The plan is based on the assumption that funding will be approved."
+  }
+]
