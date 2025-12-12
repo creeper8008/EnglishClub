@@ -1,1 +1,142 @@
-
+[
+  {
+    "id": 1,
+    "word": "negotiate",
+    "pos": "v",
+    "meaning": "〜を交渉する",
+    "example": "The two companies negotiated for weeks before reaching a mutually beneficial agreement."
+  },
+  {
+    "id": 2,
+    "word": "undergo",
+    "pos": "v",
+    "meaning": "〜を経験する、受ける",
+    "example": "The building will undergo major renovations to improve safety standards."
+  },
+  {
+    "id": 3,
+    "word": "crucial",
+    "pos": "adj",
+    "meaning": "極めて重要な",
+    "example": "It is crucial to verify all data before submitting the final report."
+  },
+  {
+    "id": 4,
+    "word": "evaluate",
+    "pos": "v",
+    "meaning": "〜を評価する",
+    "example": "The committee will evaluate each proposal based on originality and feasibility."
+  },
+  {
+    "id": 5,
+    "word": "initiative",
+    "pos": "n",
+    "meaning": "主導権、新たな計画",
+    "example": "The university launched a new initiative to support international students."
+  },
+  {
+    "id": 6,
+    "word": "controversial",
+    "pos": "adj",
+    "meaning": "議論を呼ぶ、物議を醸す",
+    "example": "The politician's controversial remarks sparked debates nationwide."
+  },
+  {
+    "id": 7,
+    "word": "allocate",
+    "pos": "v",
+    "meaning": "〜を割り当てる",
+    "example": "Funds were allocated to departments that demonstrated clear improvement plans."
+  },
+  {
+    "id": 8,
+    "word": "competent",
+    "pos": "adj",
+    "meaning": "有能な、能力がある",
+    "example": "Only competent staff members are allowed to handle sensitive information."
+  },
+  {
+    "id": 9,
+    "word": "contradict",
+    "pos": "v",
+    "meaning": "〜と矛盾する、反対を述べる",
+    "example": "The witness’s statement contradicted the evidence presented in court."
+  },
+  {
+    "id": 10,
+    "word": "emphasize",
+    "pos": "v",
+    "meaning": "〜を強調する",
+    "example": "Lecturers often emphasize the importance of critical thinking skills."
+  },
+  {
+    "id": 11,
+    "word": "retain",
+    "pos": "v",
+    "meaning": "〜を保持する",
+    "example": "It is challenging for companies to retain talented employees in a competitive market."
+  },
+  {
+    "id": 12,
+    "word": "initiative",
+    "pos": "n",
+    "meaning": "自主性、率先",
+    "example": "Students who show initiative tend to succeed in group projects."
+  },
+  {
+    "id": 13,
+    "word": "distinguish",
+    "pos": "v",
+    "meaning": "〜を区別する",
+    "example": "It is sometimes difficult to distinguish fact from opinion online."
+  },
+  {
+    "id": 14,
+    "word": "prominent",
+    "pos": "adj",
+    "meaning": "著名な、目立つ",
+    "example": "Several prominent researchers attended the scientific conference."
+  },
+  {
+    "id": 15,
+    "word": "exploit",
+    "pos": "v",
+    "meaning": "〜を利用する、搾取する",
+    "example": "Some companies exploit customer data without providing clear explanations."
+  },
+  {
+    "id": 16,
+    "word": "derive",
+    "pos": "v",
+    "meaning": "〜に由来する、引き出す",
+    "example": "The word 'biology' is derived from Greek roots meaning 'life' and 'study'."
+  },
+  {
+    "id": 17,
+    "word": "transition",
+    "pos": "n",
+    "meaning": "移行、推移",
+    "example": "The transition to online classes required significant preparation from teachers."
+  },
+  {
+    "id": 18,
+    "word": "substantial",
+    "pos": "adj",
+    "meaning": "かなりの、重要な",
+    "example": "The project received substantial support from the local community."
+  },
+  {
+    "id": 19,
+    "word": "legitimate",
+    "pos": "adj",
+    "meaning": "正当な、合法的な",
+    "example": "Customers raised legitimate concerns regarding the product's safety."
+  },
+  {
+    "id": 20,
+    "word": "contribute",
+    "pos": "v",
+    "meaning": "〜に貢献する",
+    "example": "Volunteers contributed valuable insights during the planning process."
+  }
+]
