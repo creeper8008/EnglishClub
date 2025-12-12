@@ -1,87 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vocabulary Trainer</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-    }
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-    button {
-      padding: 8px 16px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.8;
-    }
-  </style>
-</head>
-<body>
-  <h1>Vocabulary Trainer</h1>
-  <p>英語サークル向けの単語学習ツールです。</p>
+const content = showBack ? `<h2>${w.meaning}</h2><p>${w.example}</p>` : `<h1>${w.word}</h1><p>${w.pos}</p>`;
+setView(`
+<h2>Flashcards</h2>
+<div class='flashcard' onclick='toggleFlash()'>${content}</div>
+<button onclick='nextFlash()'>次へ</button>
+`);
+}
+function toggleFlash(){ showBack = !showBack; showFlash(); }
+function nextFlash(){ index = (index+1)%words.length; showBack=false; showFlash(); }
 
-  <div class="card">
-    <label>新しい単語を追加:</label><br>
-    <input id="word" placeholder="word" />
-    <input id="meaning" placeholder="meaning" />
-    <button onclick="addWord()">Add</button>
-  </div>
 
-  <div class="card">
-    <h2>Quiz</h2>
-    <button onclick="startQuiz()">Start Quiz</button>
-    <p id="quiz-word"></p>
-    <input id="quiz-answer" placeholder="your answer" />
-    <button onclick="checkAnswer()">Check</button>
-    <p id="quiz-result"></p>
-  </div>
+// Quiz
+let quizIndex = 0;
+let score = 0;
+function quizMode(){
+mode = "quiz";
+quizIndex = 0;
+score = 0;
+nextQuiz();
+}
+function nextQuiz(){
+if(quizIndex >= words.length){ return quizResult(); }
+const q = words[quizIndex];
+const options = shuffle([q.meaning, ...getRandomMeanings(q.meaning,3)]);
+setView(`
+<h2>Quiz ${quizIndex+1}/${words.length}</h2>
+<h3>${q.word}</h3>
+${options.map(o=>`<div class='quiz-option' onclick='selectQuiz("${o}")'>${o}</div>`).join("")}
+`);
+}
+function selectQuiz(opt){
+if(opt === words[quizIndex].meaning) score++;
+quizIndex++;
+nextQuiz();
+}
+function quizResult(){
+setView(`
+<h2>結果</h2>
+<p>${score} / ${words.length}</p>
+<button onclick='modeSelect()'>戻る</button>
+`);
+}
 
-  <script>
-    const words = [];
-    let current = null;
 
-    function addWord() {
-      const w = document.getElementById("word").value;
-      const m = document.getElementById("meaning").value;
-      if (w && m) {
-        words.push({ w, m });
-        alert("Added!");
-      }
-    }
+function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
+function getRandomMeanings(correct, count){
+const arr = words.filter(w=>w.meaning!==correct).map(w=>w.meaning);
+return shuffle(arr).slice(0,count);
+}
 
-    function startQuiz() {
-      if (words.length === 0) {
-        alert("No words yet.");
-        return;
-      }
-      current = words[Math.floor(Math.random() * words.length)];
-      document.getElementById("quiz-word").innerText = current.w;
-      document.getElementById("quiz-result").innerText = "";
-      document.getElementById("quiz-answer").value = "";
-    }
 
-    function checkAnswer() {
-      const ans = document.getElementById("quiz-answer").value;
-      if (!current) return;
-
-      if (ans.trim().toLowerCase() === current.m.toLowerCase()) {
-        document.getElementById("quiz-result").innerText = "Correct!";
-      } else {
-        document.getElementById("quiz-result").innerText = `Wrong: ${current.m}`;
-      }
-    }
-  </script>
+home();
+</script>
 </body>
 </html>
