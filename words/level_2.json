@@ -1,1 +1,22 @@
-
+[
+{"id":1,"word":"achieve","pos":"v","meaning":"達成する","example":"She achieved her goal after months of consistent practice and careful planning."},
+{"id":2,"word":"confident","pos":"adj","meaning":"自信のある","example":"He felt confident about the presentation because he had rehearsed many times."},
+{"id":3,"word":"demand","pos":"v","meaning":"要求する","example":"The manager demanded an explanation for the delay in the report submission."},
+{"id":4,"word":"effective","pos":"adj","meaning":"効果的な","example":"The new study method proved to be effective for improving test scores."},
+{"id":5,"word":"limit","pos":"v","meaning":"制限する","example":"They decided to limit smartphone use during the study session to avoid distractions."},
+{"id":6,"word":"mental","pos":"adj","meaning":"精神の","example":"Regular exercise helps maintain good mental health and reduces stress levels."},
+{"id":7,"word":"offer","pos":"v","meaning":"提供する","example":"The teacher offered several examples to help students understand the concept."},
+{"id":8,"word":"prevent","pos":"v","meaning":"防ぐ","example":"Washing hands frequently can prevent the spread of common illnesses."},
+{"id":9,"word":"require","pos":"v","meaning":"必要とする","example":"The course requires students to submit weekly assignments on time."},
+{"id":10,"word":"various","pos":"adj","meaning":"様々な","example":"The festival offers various food options, from local dishes to international cuisine."},
+{"id":11,"word":"affect","pos":"v","meaning":"影響を与える","example":"Weather conditions can affect travel plans, especially during winter."},
+{"id":12,"word":"attempt","pos":"v","meaning":"試みる","example":"She attempted to solve the problem using a different strategy than before."},
+{"id":13,"word":"creative","pos":"adj","meaning":"創造的な","example":"The team developed a creative solution to attract more participants."},
+{"id":14,"word":"discuss","pos":"v","meaning":"議論する","example":"We discussed several ideas before deciding on the final project theme."},
+{"id":15,"word":"improve","pos":"v","meaning":"改善する","example":"He practiced daily to improve his pronunciation and speaking fluency."},
+{"id":16,"word":"likely","pos":"adj","meaning":"〜しそうな","example":"It is likely that the event will be postponed due to bad weather."},
+{"id":17,"word":"proper","pos":"adj","meaning":"適切な","example":"Proper planning is essential for organizing a successful workshop."},
+{"id":18,"word":"remove","pos":"v","meaning":"取り除く","example":"She removed unnecessary items from her desk to stay more organized."},
+{"id":19,"word":"significant","pos":"adj","meaning":"重要な","example":"The study showed a significant increase in productivity after the change."},
+{"id":20,"word":"tradition","pos":"n","meaning":"伝統","example":"The community keeps its tradition alive by holding an annual cultural event."}
+]
