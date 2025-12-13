@@ -196,15 +196,9 @@ function showFlash(){
     <h2>Flashcards</h2>
     <div class='flashcard' onclick='toggleFlash()'>${content}</div>
     <button onclick='nextFlash()'>次へ</button>
-  `);
-
-  setView(`
-    <h2>Flashcards</h2>
-    <div class='flashcard' onclick='toggleFlash()'>${content}</div>
-    <button onclick='nextFlash()'>次へ</button>
     ${homeBar()}
   `);
-}
+  }
   
 function toggleFlash(){ showBack = !showBack; showFlash(); }
 function nextFlash(){ index = (index+1)%words.length; showBack=false; showFlash(); }
@@ -226,6 +220,7 @@ function nextQuiz(){
     <h2>Quiz ${quizIndex+1}/${words.length}</h2>
     <h3>${q.word}</h3>
     ${options.map(o=>`<div class='quiz-option' onclick='selectQuiz("${o}")'>${o}</div>`).join("")}
+    ${homeBar()}
   `);
 }
 function selectQuiz(opt){
