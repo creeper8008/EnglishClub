@@ -1,60 +1,54 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Vocabulary Trainer</title>
-<style>
-body { font-family: sans-serif; background:#ffffff; margin:0; padding:0; }
-h1,h2 { text-align:center; }
-.container { max-width:600px; margin:0 auto; padding:20px; }
-.level-card {
-padding:20px; margin:10px 0; border-radius:12px;
-color:#333; font-weight:bold; cursor:pointer; text-align:center;
-transition:0.2s;
+<h2>Flashcards</h2>
+<div class='flashcard' onclick='toggleFlash()'>${content}</div>
+<button onclick='nextFlash()'>次へ</button>
+`);
 }
-.level-card:hover { transform:scale(1.03); }
-.flashcard {
-background:#fff; padding:30px; border-radius:12px;
-box-shadow:0 4px 8px rgba(0,0,0,0.1); margin-top:20px;
-text-align:center; cursor:pointer;
+function toggleFlash(){ showBack = !showBack; showFlash(); }
+function nextFlash(){ index = (index+1)%words.length; showBack=false; showFlash(); }
+
+
+// Quiz
+let quizIndex = 0;
+let score = 0;
+function quizMode(){
+mode = "quiz";
+quizIndex = 0;
+score = 0;
+nextQuiz();
 }
-.quiz-option {
-background:#fff; padding:12px; border-radius:12px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
-margin:10px 0; cursor:pointer;
-}
-</style>
-</head>
-<body>
-<div class="container" id="app"></div>
-<script>
-let currentLevel = null;
-let words = [];
-let index = 0;
-let showBack = false;
-let mode = null;
-
-
-function setView(html){ document.getElementById("app").innerHTML = html; }
-
-
-function home(){
-mode = null;
+function nextQuiz(){
+if(quizIndex >= words.length){ return quizResult(); }
+const q = words[quizIndex];
+const options = shuffle([q.meaning, ...getRandomMeanings(q.meaning,3)]);
 setView(`
-<h1>Vocabulary Trainer</h1>
-<h2>レベル選択</h2>
-<div class='level-card' style='background:#b3e5fc' onclick='loadLevel(1)'>Level 1（初級）</div>
-<div class='level-card' style='background:#f8bbd0' onclick='loadLevel(2)'>Level 2（中級）</div>
-<div class='level-card' style='background:#c8e6c9' onclick='loadLevel(3)'>Level 3（中上級）</div>
-<div class='level-card' style='background:#fff9c4' onclick='loadLevel(4)'>Level 4（上級）</div>
-<div class='level-card' style='background:#e1bee7' onclick='loadLevel(5)'>Level 5（最上級）</div>
+<h2>Quiz ${quizIndex+1}/${words.length}</h2>
+<h3>${q.word}</h3>
+${options.map(o=>`<div class='quiz-option' onclick='selectQuiz("${o}")'>${o}</div>`).join("")}
+`);
+}
+function selectQuiz(opt){
+if(opt === words[quizIndex].meaning) score++;
+quizIndex++;
+nextQuiz();
+}
+function quizResult(){
+setView(`
+<h2>結果</h2>
+<p>${score} / ${words.length}</p>
+<button onclick='modeSelect()'>戻る</button>
 `);
 }
 
 
-async function loadLevel(lv){
-currentLevel = lv;
-const res = await fetch(`words/level_${lv}.json`);
-words = await res.json();
+function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
+function getRandomMeanings(correct, count){
+const arr = words.filter(w=>w.meaning!==correct).map(w=>w.meaning);
+return shuffle(arr).slice(0,count);
+}
+
+
+home();
+</script>
+</body>
 </html>
