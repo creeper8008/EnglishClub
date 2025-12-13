@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Vocabulary Trainer</title>
+  
 <style>
   body { font-family: sans-serif; background:#ffffff; margin:0; padding:0; }
   h1,h2 { text-align:center; }
@@ -71,6 +72,55 @@
   font-size: 14px;
 }
 
+.result-card {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  background: linear-gradient(135deg, #fff0f6, #e7f5ff);
+  border-radius: 28px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+.result-title {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.result-score {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.result-rate {
+  font-size: 42px;
+  font-weight: bold;
+  color: #ff6b6b;
+  margin: 18px 0;
+}
+
+.result-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.retry-btn {
+  background: #caffbf;
+}
+
+.home-btn {
+  background: #ffd43b;
+}
+
+
+
+  
 </style>
 </head>
 <body>
@@ -180,6 +230,28 @@ function quizResult(){
     <h2>結果</h2>
     <p>${score} / ${words.length}</p>
     <button onclick='modeSelect()'>戻る</button>
+  `);
+  const rate = Math.round((score / words.length) * 100);
+  setView(`
+    <div class="result-card">
+      <div class="result-title">🎉 Good Job!</div>
+
+      <div class="result-score">
+        ${score} / ${words.length} correct
+      </div>
+
+      <div class="result-rate">
+        ${rate}%
+      </div>
+
+      <button class="result-btn retry-btn" onclick="quizMode()">
+        もう一度チャレンジ
+      </button>
+
+      <button class="result-btn home-btn" onclick="home()">
+        🏠 ホームに戻る
+      </button>
+    </div>
   `);
 }
 
