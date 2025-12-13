@@ -269,14 +269,16 @@ function nextQuiz(){
   `);
 }
 function selectQuiz(opt){
-  if(opt === words[quizIndex].meaning) score++;{
-  quizIndex++;
+  if(opt === words[quizIndex].meaning) {
+    score++;
+    quizIndex++;
   } else {
     words[quizIndex].wrong = true;
   }
   quizIndex++;
   nextQuiz();
 }
+
   
 function quizResult(){
   setView(`
