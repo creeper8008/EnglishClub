@@ -24,6 +24,53 @@
     box-shadow:0 2px 5px rgba(0,0,0,0.1);
     margin:10px 0; cursor:pointer;
   }
+  .mode-card {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 28px 24px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+.level-badge {
+  display: inline-block;
+  background: #b5e5ff;
+  color: #034078;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.mode-btn {
+  display: block;
+  width: 100%;
+  margin: 14px 0;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.flash-btn {
+  background: #ffd6e0;
+}
+
+.quiz-btn {
+  background: #caffbf;
+}
+
+.back-btn {
+  margin-top: 18px;
+  background: #e9ecef;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
 </style>
 </head>
 <body>
@@ -65,6 +112,29 @@ function modeSelect(){
     <button onclick='quizMode()'>4択クイズ</button>
     <button onclick='home()'>戻る</button>
   `);
+  setView(`
+    <div class="mode-card">
+      <div class="level-badge">
+        Level ${currentLevel}
+      </div>
+
+      <h2>How do you want to study?</h2>
+
+      <button class="mode-btn flash-btn" onclick="flashMode()">
+        🃏 フラッシュカード
+      </button>
+
+      <button class="mode-btn quiz-btn" onclick="quizMode()">
+        ✏️ 4択クイズ
+      </button>
+
+      <button class="back-btn" onclick="home()">
+        ← ホームに戻る
+      </button>
+    </div>
+  `);
+
+  
 }
 
 // Flashcards
