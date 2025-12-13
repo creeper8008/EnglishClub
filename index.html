@@ -155,6 +155,12 @@ async function loadLevel(lv){
   modeSelect();
 }
 
+words.forEach(w => {
+  if (w.review === undefined) w.review = false;
+  if (w.wrong === undefined) w.wrong = false;
+});
+
+  
 function modeSelect(){
   setView(`
     <h2>Level ${currentLevel}</h2>
@@ -196,13 +202,52 @@ function showFlash(){
     <h2>Flashcards</h2>
     <div class='flashcard' onclick='toggleFlash()'>${content}</div>
     <button onclick='nextFlash()'>次へ</button>
+     <button onclick="markReview()">🔁 見直す</button>
+     <button onclick="nextFlash()">次へ</button>
     ${homeBar()}
   `);
   }
+function markReview(){
+  words[index].review = true;
+  nextFlash();
+}
   
 function toggleFlash(){ showBack = !showBack; showFlash(); }
 function nextFlash(){ index = (index+1)%words.length; showBack=false; showFlash(); }
 
+function reviewWords(){
+  const list = words.filter(w => w.review);
+  if(list.length === 0){
+    alert("見直す単語はありません");
+    return;
+  }
+  startFlashWith(list);
+}
+
+function wrongWords(){
+  const list = words.filter(w => w.wrong);
+  if(list.length === 0){
+    alert("間違えた単語はありません");
+    return;
+  }
+  startQuizWith(list);
+}
+
+function startFlashWith(list){
+  words = list;
+  index = 0;
+  showBack = false;
+  flashMode();
+}
+
+function startQuizWith(list){
+  words = list;
+  quizIndex = 0;
+  score = 0;
+  quizMode();
+}
+
+  
 // Quiz
 let quizIndex = 0;
 let score = 0;
@@ -225,6 +270,10 @@ function nextQuiz(){
 }
 function selectQuiz(opt){
   if(opt === words[quizIndex].meaning) score++;
+  quizIndex++;
+  } else {
+    words[quizIndex].wrong = true;
+  }
   quizIndex++;
   nextQuiz();
 }
