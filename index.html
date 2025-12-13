@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<button onclick='quizMode()'>4択クイズ</button>
+<button onclick='home()'>戻る</button>
+`);
+}
+
+
+// Flashcards
+function flashMode(){ mode = "flash"; index = 0; showFlash(); }
+function showFlash(){
+const w = words[index];
+const content = showBack ? `<h2>${w.meaning}</h2><p>${w.example}</p>` : `<h1>${w.word}</h1><p>${w.pos}</p>`;
+setView(`
 <h2>Flashcards</h2>
 <div class='flashcard' onclick='toggleFlash()'>${content}</div>
 <button onclick='nextFlash()'>次へ</button>
