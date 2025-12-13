@@ -197,7 +197,15 @@ function showFlash(){
     <div class='flashcard' onclick='toggleFlash()'>${content}</div>
     <button onclick='nextFlash()'>次へ</button>
   `);
+
+  setView(`
+    <h2>Flashcards</h2>
+    <div class='flashcard' onclick='toggleFlash()'>${content}</div>
+    <button onclick='nextFlash()'>次へ</button>
+    ${homeBar()}
+  `);
 }
+  
 function toggleFlash(){ showBack = !showBack; showFlash(); }
 function nextFlash(){ index = (index+1)%words.length; showBack=false; showFlash(); }
 
@@ -254,6 +262,17 @@ function quizResult(){
     </div>
   `);
 }
+  
+  function homeBar(){
+  return `
+    <div style="margin-top:24px;">
+      <button class="home-btn" onclick="home()">
+        🏠 ホームに戻る
+      </button>
+    </div>
+  `;
+}
+
 
 function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
 function getRandomMeanings(correct, count){
