@@ -269,7 +269,7 @@ function nextQuiz(){
   `);
 }
 function selectQuiz(opt){
-  if(opt === words[quizIndex].meaning) score++;
+  if(opt === words[quizIndex].meaning) score++;{
   quizIndex++;
   } else {
     words[quizIndex].wrong = true;
@@ -277,6 +277,7 @@ function selectQuiz(opt){
   quizIndex++;
   nextQuiz();
 }
+  
 function quizResult(){
   setView(`
     <h2>結果</h2>
