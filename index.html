@@ -151,30 +151,25 @@ async function loadLevel(lv){
   currentLevel = lv;
   const res = await fetch(`words/level_${lv}.json`);
   words = await res.json();
+words.forEach(w => {
+  if (w.review === undefined) w.review = false;
+  if (w.wrong === undefined) w.wrong = false;
+  });
   index = 0;
   modeSelect();
 }
 
-words.forEach(w => {
-  if (w.review === undefined) w.review = false;
-  if (w.wrong === undefined) w.wrong = false;
-});
+
 
   
 function modeSelect(){
-  setView(`
-    <h2>Level ${currentLevel}</h2>
-    <button onclick='flashMode()'>フラッシュカード</button>
-    <button onclick='quizMode()'>4択クイズ</button>
-    <button onclick='home()'>戻る</button>
-  `);
   setView(`
     <div class="mode-card">
       <div class="level-badge">
         Level ${currentLevel}
       </div>
 
-      <h2>How do you want to study?</h2>
+      <h2>今日は何をしますか?</h2>
 
       <button class="mode-btn flash-btn" onclick="flashMode()">
         🃏 フラッシュカード
@@ -203,7 +198,6 @@ function showFlash(){
     <div class='flashcard' onclick='toggleFlash()'>${content}</div>
     <button onclick='nextFlash()'>次へ</button>
      <button onclick="markReview()">🔁 見直す</button>
-     <button onclick="nextFlash()">次へ</button>
     ${homeBar()}
   `);
   }
@@ -271,7 +265,6 @@ function nextQuiz(){
 function selectQuiz(opt){
   if(opt === words[quizIndex].meaning) {
     score++;
-    quizIndex++;
   } else {
     words[quizIndex].wrong = true;
   }
@@ -281,11 +274,6 @@ function selectQuiz(opt){
 
   
 function quizResult(){
-  setView(`
-    <h2>結果</h2>
-    <p>${score} / ${words.length}</p>
-    <button onclick='modeSelect()'>戻る</button>
-  `);
   const rate = Math.round((score / words.length) * 100);
   setView(`
     <div class="result-card">
