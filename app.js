@@ -4,6 +4,11 @@ let index = 0;
 let showBack = false;
 let mode = null;
 
+const STORAGE_KEY = "vocabProgress";
+
+let progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+
 function setView(html){ document.getElementById("app").innerHTML = html; }
 
 function home(){
@@ -30,10 +35,7 @@ words.forEach(w => {
   index = 0;
   modeSelect();
 }
-
-
-
-  
+ 
 function modeSelect(){
   setView(`
     <div class="mode-card">
@@ -56,8 +58,6 @@ function modeSelect(){
       </button>
     </div>
   `);
-
-  
 }
 
 // Flashcards
@@ -74,13 +74,13 @@ function showFlash(){
   `);
   }
 function markReview(){
-  words[index].review = true;
+  const p = getProgress(words[index].word);
+  p.review = true;
+  saveProgress();
   nextFlash();
 }
-  
 function toggleFlash(){ showBack = !showBack; showFlash(); }
 function nextFlash(){ index = (index+1)%words.length; showBack=false; showFlash(); }
-
 function reviewWords(){
   const list = words.filter(w => w.review);
   if(list.length === 0){
@@ -98,14 +98,12 @@ function wrongWords(){
   }
   startQuizWith(list);
 }
-
 function startFlashWith(list){
   words = list;
   index = 0;
   showBack = false;
   flashMode();
 }
-
 function startQuizWith(list){
   words = list;
   quizIndex = 0;
@@ -113,7 +111,10 @@ function startQuizWith(list){
   quizMode();
 }
 
-  
+
+
+
+
 // Quiz
 let quizIndex = 0;
 let score = 0;
@@ -135,16 +136,21 @@ function nextQuiz(){
   `);
 }
 function selectQuiz(opt){
-  if(opt === words[quizIndex].meaning) {
+  const word = words[quizIndex].word;
+  const p = getProgress(word);
+
+  if(opt === words[quizIndex].meaning){
     score++;
+    p.correctCount++;
   } else {
-    words[quizIndex].wrong = true;
+    p.wrong = true;
+    p.wrongCount++;
   }
+
+  saveProgress();
   quizIndex++;
   nextQuiz();
 }
-
-  
 function quizResult(){
   const rate = Math.round((score / words.length) * 100);
   setView(`
@@ -169,7 +175,6 @@ function quizResult(){
     </div>
   `);
 }
-  
   function homeBar(){
   return `
     <div style="margin-top:24px;">
@@ -179,12 +184,31 @@ function quizResult(){
     </div>
   `;
 }
-
-
 function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
 function getRandomMeanings(correct, count){
   const arr = words.filter(w=>w.meaning!==correct).map(w=>w.meaning);
   return shuffle(arr).slice(0,count);
   }
+
+
+//単語保存関連のコード
+function getProgress(word){
+  if(!progress[word]){
+    progress[word] = {
+      review: false,
+      wrong: false,
+      correctCount: 0,
+      wrongCount: 0
+    };
+  }
+  return progress[word];
+}
+
+function saveProgress(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
+
+
 
 home();
