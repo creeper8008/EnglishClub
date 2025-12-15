@@ -81,23 +81,35 @@ function markReview(){
 }
 function toggleFlash(){ showBack = !showBack; showFlash(); }
 function nextFlash(){ index = (index+1)%words.length; showBack=false; showFlash(); }
+
 function reviewWords(){
-  const list = words.filter(w => w.review);
+  const list = words.filter(w => {
+    const p = progress[w.word];
+    return p && p.review === true;
+  });
+
   if(list.length === 0){
     alert("見直す単語はありません");
     return;
   }
+
   startFlashWith(list);
 }
 
 function wrongWords(){
-  const list = words.filter(w => w.wrong);
+  const list = words.filter(w => {
+    const p = progress[w.word];
+    return p && p.wrong === true;
+  });
+
   if(list.length === 0){
     alert("間違えた単語はありません");
     return;
   }
+
   startQuizWith(list);
 }
+
 function startFlashWith(list){
   words = list;
   index = 0;
