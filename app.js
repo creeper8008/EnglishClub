@@ -21,6 +21,8 @@ function home(){
     <div class='level-card' style='background:#c8e6c9' onclick='loadLevel(3)'>Level 3（中上級）</div>
     <div class='level-card' style='background:#fff9c4' onclick='loadLevel(4)'>Level 4（上級）</div>
     <div class='level-card' style='background:#e1bee7' onclick='loadLevel(5)'>Level 5（最上級）</div>
+    <button onclick="reviewWords()">🔁 見直す単語</button>
+    <button onclick="wrongWords()">❌ 間違えた単語</button>
   `);
 }
 
