@@ -1,11 +1,12 @@
 /**
- * Vocab Studio 5.0 - Professional Workflow Edition
+ * Vocab Studio 5.1 - TOEIC Baukage Edition
+ * 修正内容: 空リスト時のホーム自動遷移、ナビゲーションの整合性向上
  */
 
 let words = [];
 let index = 0;
 let showBack = false;
-let sessionType = null; 
+let sessionType = null; // "level", "review", "wrong"
 let currentLevel = null;
 
 const STORAGE_KEY = "vocabProgress";
@@ -21,14 +22,14 @@ function home() {
   setView(`
     <div class="fade-in">
       <h1>Vocab Studio</h1>
-      <p class="subtitle">挑戦するレベルを選んでください</p>
+      <p class="subtitle">TOEICスコア目標を選んでください</p>
       
       <div class="level-list">
-        <div class='level-card card-1' onclick='loadLevel(1)'>Level 1<span>初級・Beginner</span></div>
-        <div class='level-card card-2' onclick='loadLevel(2)'>Level 2<span>中級・Intermediate</span></div>
-        <div class='level-card card-3' onclick='loadLevel(3)'>Level 3<span>中上級・Upper-Intermediate</span></div>
-        <div class='level-card card-4' onclick='loadLevel(4)'>Level 4<span>上級・Advanced</span></div>
-        <div class='level-card card-5' onclick='loadLevel(5)'>Level 5<span>最上級・Master</span></div>
+        <div class='level-card card-1' onclick='loadLevel(1)'>Level 1<span>600点突破・基礎固め</span></div>
+        <div class='level-card card-2' onclick='loadLevel(2)'>Level 2<span>730点・ビジネス基本</span></div>
+        <div class='level-card card-3' onclick='loadLevel(3)'>Level 3<span>860点・高得点必須</span></div>
+        <div class='level-card card-4' onclick='loadLevel(4)'>Level 4<span>900点越え・難語</span></div>
+        <div class='level-card card-5' onclick='loadLevel(5)'>Level 5<span>マスター・極め</span></div>
       </div>
 
       <div class="utility-grid">
@@ -50,7 +51,11 @@ function showCheckedWords() {
     .filter(key => progress[key].review && progress[key].wordData)
     .map(key => progress[key].wordData);
 
-  if (list.length === 0) return alert("チェックした単語はありません。");
+  if (list.length === 0) {
+    alert("チェックした単語はありません。ホームに戻ります。");
+    home();
+    return;
+  }
 
   setView(`
     <div class="fade-in">
@@ -104,7 +109,11 @@ function showMistakenWords() {
     .filter(key => progress[key].wrong && progress[key].wordData)
     .map(key => progress[key].wordData);
 
-  if (list.length === 0) return alert("間違えた単語はありません。");
+  if (list.length === 0) {
+    alert("間違えた単語はありません！ホームに戻ります。");
+    home();
+    return;
+  }
 
   setView(`
     <div class="fade-in">
@@ -143,8 +152,7 @@ function startMistakenQuiz() {
   quizMode();
 }
 
-// --- 以下、既存の学習ロジックの改善・維持 ---
-
+// --- 学習機能 ---
 async function loadLevel(lv) {
   currentLevel = lv;
   sessionType = "level";
@@ -153,7 +161,7 @@ async function loadLevel(lv) {
     words = await res.json();
     index = 0;
     modeSelect();
-  } catch (e) { alert("読み込み失敗"); }
+  } catch (e) { alert("単語データの読み込みに失敗しました。"); }
 }
 
 function modeSelect() {
@@ -178,7 +186,10 @@ function modeSelect() {
 
 function flashMode() { index = 0; showFlash(); }
 function showFlash() {
-  if (words.length === 0) return home();
+  if (words.length === 0) {
+      if (sessionType === "review") return showCheckedWords();
+      return home();
+  }
   const w = words[index];
   const p = getProgress(w.word);
   const content = showBack 
@@ -219,7 +230,7 @@ function unmarkReview() {
   saveProgress();
   if (sessionType === "review") {
       words = words.filter(w => w.word !== words[index].word);
-      if (words.length === 0) { alert("完了！"); showCheckedWords(); } 
+      if (words.length === 0) { showCheckedWords(); } 
       else { index = index % words.length; showFlash(); }
   } else { showFlash(); }
 }
@@ -266,10 +277,14 @@ function quizResult() {
   `);
 }
 
+// --- 共通ユーティリティ ---
 function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
 function getRandomMeanings(correct, count) {
   const all = words.map(w => w.meaning).filter(m => m !== correct);
-  return shuffle(all).slice(0, count);
+  const result = shuffle(all).slice(0, count);
+  // 足りない場合のダミー
+  while(result.length < count) { result.push("---"); }
+  return result;
 }
 function getProgress(word) {
   if (!progress[word]) progress[word] = { review: false, wrong: false, correctCount: 0, wrongCount: 0, wordData: null };
