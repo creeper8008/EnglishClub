@@ -1,5 +1,5 @@
 /**
- * Vocab Studio 2.0 - Ultra Modern Edition
+ * Vocab Studio 2.5 - Localization & Credit Edition
  */
 
 let currentLevel = null;
@@ -21,20 +21,25 @@ function home() {
   setView(`
     <div class="fade-in">
       <h1>Vocab Studio</h1>
-      <p class="subtitle">Select your challenge level</p>
+      <p class="subtitle">挑戦するレベルを選んでください</p>
       
       <div class="level-list">
-        <div class='level-card card-1' onclick='loadLevel(1)'>Level 1<span>Beginner</span></div>
-        <div class='level-card card-2' onclick='loadLevel(2)'>Level 2<span>Intermediate</span></div>
-        <div class='level-card card-3' onclick='loadLevel(3)'>Level 3<span>Upper-Intermediate</span></div>
-        <div class='level-card card-4' onclick='loadLevel(4)'>Level 4<span>Advanced</span></div>
-        <div class='level-card card-5' onclick='loadLevel(5)'>Level 5<span>Master</span></div>
+        <div class='level-card card-1' onclick='loadLevel(1)'>Level 1<span>初級・Beginner</span></div>
+        <div class='level-card card-2' onclick='loadLevel(2)'>Level 2<span>中級・Intermediate</span></div>
+        <div class='level-card card-3' onclick='loadLevel(3)'>Level 3<span>中上級・Upper-Intermediate</span></div>
+        <div class='level-card card-4' onclick='loadLevel(4)'>Level 4<span>上級・Advanced</span></div>
+        <div class='level-card card-5' onclick='loadLevel(5)'>Level 5<span>最上級・Master</span></div>
       </div>
 
       <div class="utility-grid">
-        <button class="neon-btn-outline" onclick="reviewWords()">🔁 Review List</button>
-        <button class="neon-btn-outline" onclick="wrongWords()">❌ Mistake List</button>
+        <button class="neon-btn-outline" onclick="reviewWords()">🔁 見直す単語リスト</button>
+        <button class="neon-btn-outline" onclick="wrongWords()">❌ 間違えた単語リスト</button>
       </div>
+
+      <footer class="app-footer">
+        <p>Presented by Nagaoka University English Circle</p>
+        <p class="footer-sub">長岡大学 英語サークル 制作</p>
+      </footer>
     </div>
   `);
 }
@@ -58,21 +63,23 @@ function modeSelect() {
   setView(`
     <div class="mode-container fade-in">
       <div class="level-badge">Level ${currentLevel}</div>
-      <h2>Choose your mode</h2>
+      <h2>学習モードを選択してください</h2>
       
       <div class="mode-selection-grid">
         <button class="mode-main-btn flash-trigger" onclick="flashMode()">
           <span class="icon">🃏</span>
-          <span class="text">Flashcards</span>
+          <span class="text">フラッシュカード</span>
+          <span class="sub-text">Flashcards</span>
         </button>
         
         <button class="mode-main-btn quiz-trigger" onclick="quizMode()">
           <span class="icon">✏️</span>
-          <span class="text">4-Choice Quiz</span>
+          <span class="text">4択クイズ</span>
+          <span class="sub-text">4-Choice Quiz</span>
         </button>
       </div>
 
-      <button class="back-link" onclick="home()">← Back to Home</button>
+      <button class="back-link" onclick="home()">← ホームに戻る</button>
     </div>
   `);
 }
@@ -103,17 +110,17 @@ function showFlash() {
       <div class='flashcard' onclick='toggleFlash()'>${content}</div>
 
       <div class="control-area">
-        <button class="neon-btn-primary" onclick='nextFlash()'>Next Word →</button>
+        <button class="neon-btn-primary" onclick='nextFlash()'>次の単語へ →</button>
         
         <div class="sub-controls">
           ${p.review 
-            ? `<button class="neon-btn-danger" onclick="unmarkReview()">➖ Remove from Review</button>`
-            : `<button class="neon-btn-secondary" onclick="markReview()">🔁 Add to Review</button>`
+            ? `<button class="neon-btn-danger" onclick="unmarkReview()">➖ 見直しリストから削除</button>`
+            : `<button class="neon-btn-secondary" onclick="markReview()">🔁 見直しリストに追加</button>`
           }
         </div>
       </div>
 
-      <button class="back-link" onclick="${backTarget}">← Back</button>
+      <button class="back-link" onclick="${backTarget}">← 戻る</button>
     </div>
   `);
 }
@@ -130,7 +137,6 @@ function markReview() {
 function unmarkReview() {
   getProgress(words[index].word).review = false;
   saveProgress();
-  // 見直しリスト再生中なら、リストから消えたので次の単語へ
   if (sessionType === "review") {
       words = words.filter(w => w.word !== words[index].word);
       if (words.length === 0) {
@@ -171,7 +177,7 @@ function nextQuiz() {
       <div class="options-list">
         ${options.map(o => `<div class='quiz-option' onclick='selectQuiz("${o}")'>${o}</div>`).join("")}
       </div>
-      <button class="back-link" onclick="${backTarget}">← Quit Quiz</button>
+      <button class="back-link" onclick="${backTarget}">← クイズを中断</button>
     </div>
   `);
 }
@@ -196,11 +202,11 @@ function quizResult() {
   const rate = Math.round((score / words.length) * 100);
   setView(`
     <div class="result-card fade-in">
-      <div class="result-title">Quiz Finished!</div>
+      <div class="result-title">クイズ終了！</div>
       <div class="result-rate">${rate}%</div>
-      <div class="result-score">${score} / ${words.length} Correct</div>
-      <button class="neon-btn-primary" onclick="quizMode()">Try Again</button>
-      <button class="back-link" onclick="home()">Back to Home</button>
+      <div class="result-score">${words.length}問中 ${score}問 正解</div>
+      <button class="neon-btn-primary" onclick="quizMode()">もう一度挑戦する</button>
+      <button class="back-link" onclick="home()">ホームに戻る</button>
     </div>
   `);
 }
