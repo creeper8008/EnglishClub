@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap');
 
+/* --- 変数定義 --- */
 :root {
   --bg: #050810;
   --panel: rgba(20, 25, 40, 0.7);
@@ -12,6 +13,7 @@
   --text-dim: #94a3b8;
 }
 
+/* --- ベーススタイル --- */
 body {
   font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
   background-color: var(--bg);
@@ -19,91 +21,264 @@ body {
     radial-gradient(circle at 0% 0%, rgba(0, 210, 255, 0.1) 0%, transparent 40%),
     radial-gradient(circle at 100% 100%, rgba(157, 80, 187, 0.1) 0%, transparent 40%);
   color: var(--text);
-  margin: 0; min-height: 100vh; display: flex; justify-content: center;
+  margin: 0; 
+  min-height: 100vh; 
+  display: flex; 
+  justify-content: center;
 }
 
-.container { width: 100%; max-width: 440px; padding: 40px 20px; box-sizing: border-box; }
+.container { 
+  width: 100%; 
+  max-width: 440px; 
+  padding: 40px 20px; 
+  box-sizing: border-box; 
+}
 
-h1 { font-size: 3rem; font-weight: 800; text-align: center; margin: 0; background: linear-gradient(to right, #00d2ff, #9d50bb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.subtitle { text-align: center; color: var(--text-dim); margin-bottom: 2.5rem; font-size: 0.95rem; font-weight: 600; }
-.section-title { text-align: center; font-size: 1.1rem; margin-bottom: 15px; font-weight: 700; color: #fff; }
+/* --- タイトル・テキスト --- */
+h1 { 
+  font-size: 3rem; 
+  font-weight: 800; 
+  text-align: center; 
+  margin: 0; 
+  background: linear-gradient(to right, #00d2ff, #9d50bb); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+}
+.subtitle { 
+  text-align: center; 
+  color: var(--text-dim); 
+  margin-bottom: 2.5rem; 
+  font-size: 0.95rem; 
+  font-weight: 600; 
+}
+.section-title { 
+  text-align: center; 
+  font-size: 1.1rem; 
+  margin-bottom: 15px; 
+  font-weight: 700; 
+  color: #fff; 
+}
 
+/* --- レベル選択カード --- */
 .level-card {
-  background: var(--panel); border: 1px solid var(--border); padding: 18px 24px;
-  margin-bottom: 12px; border-radius: 18px; cursor: pointer;
-  display: flex; justify-content: space-between; align-items: center;
-  transition: 0.3s cubic-bezier(0.2, 1, 0.3, 1); backdrop-filter: blur(10px);
+  background: var(--panel); 
+  border: 1px solid var(--border); 
+  padding: 18px 24px;
+  margin-bottom: 12px; 
+  border-radius: 18px; 
+  cursor: pointer;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  transition: 0.3s cubic-bezier(0.2, 1, 0.3, 1); 
+  backdrop-filter: blur(10px);
 }
-.level-card:hover { transform: translateX(8px); border-color: var(--accent-blue); background: rgba(255,255,255,0.08); }
-.level-card span { font-size: 0.75rem; color: var(--text-dim); }
+.level-card:hover { 
+  transform: translateX(8px); 
+  border-color: var(--accent-blue); 
+  background: rgba(255,255,255,0.08); 
+}
+.level-card span { 
+  font-size: 0.75rem; 
+  color: var(--text-dim); 
+}
 
-.mode-selection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
-.mode-main-btn {
-  background: var(--panel); border: 1px solid var(--border);
-  padding: 35px 15px; border-radius: 24px; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: 0.3s; height: 100%; box-sizing: border-box;
+/* --- 学習モード選択 --- */
+.mode-selection-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 16px; 
+  margin: 20px 0; 
 }
-.mode-main-btn:hover { border-color: var(--accent-green); transform: translateY(-5px); background: rgba(0, 255, 135, 0.05); }
+.mode-main-btn {
+  background: var(--panel); 
+  border: 1px solid var(--border);
+  padding: 35px 15px; 
+  border-radius: 24px; 
+  cursor: pointer;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+  transition: 0.3s; 
+  height: 100%; 
+  box-sizing: border-box;
+}
+.mode-main-btn:hover { 
+  border-color: var(--accent-green); 
+  transform: translateY(-5px); 
+  background: rgba(0, 255, 135, 0.05); 
+}
 .mode-main-btn .icon { font-size: 2.2rem; margin-bottom: 12px; }
 .mode-main-btn .text { font-weight: 700; font-size: 1rem; color: #fff; }
 
+/* --- 【新機能】出題数選択エリア --- */
+.count-selector-area {
+  margin: 25px 0;
+  text-align: center;
+}
+.small-label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+.count-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.count-btn {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 12px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.2s;
+  font-family: inherit;
+}
+.count-btn:hover {
+  border-color: var(--accent-blue);
+  color: #fff;
+}
+.count-btn.active {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #000;
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+}
+
+/* --- ボタン類 --- */
 .neon-btn-primary {
   background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-  color: #000; border: none; padding: 18px; border-radius: 16px;
-  font-weight: 800; font-size: 1rem; cursor: pointer; width: 100%;
+  color: #000; 
+  border: none; 
+  padding: 18px; 
+  border-radius: 16px;
+  font-weight: 800; 
+  font-size: 1rem; 
+  cursor: pointer; 
+  width: 100%;
 }
 .main-glow { box-shadow: 0 5px 20px rgba(0, 210, 255, 0.3); }
-.main-glow:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 210, 255, 0.5); }
-.action-spacing { margin-bottom: 25px; }
+.main-glow:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 25px rgba(0, 210, 255, 0.5); 
+}
 
 .neon-btn-outline {
-  background: transparent; border: 1px solid var(--border);
-  color: #fff; padding: 14px; border-radius: 14px;
-  cursor: pointer; font-weight: 600; width: 100%;
+  background: transparent; 
+  border: 1px solid var(--border);
+  color: #fff; 
+  padding: 14px; 
+  border-radius: 14px;
+  cursor: pointer; 
+  font-weight: 600; 
+  width: 100%;
 }
-.neon-btn-outline:hover { background: rgba(255,255,255,0.05); border-color: #fff; }
+.neon-btn-outline:hover { 
+  background: rgba(255,255,255,0.05); 
+  border-color: #fff; 
+}
 
-.neon-btn-secondary { background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
-.neon-btn-danger { background: rgba(255, 75, 43, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+.neon-btn-secondary { 
+  background: rgba(255,255,255,0.08); 
+  border: 1px solid var(--border); 
+  color: #fff; 
+  padding: 12px; 
+  border-radius: 12px; 
+  font-weight: 600; 
+  cursor: pointer; 
+}
+.neon-btn-danger { 
+  background: rgba(255, 75, 43, 0.1); 
+  border: 1px solid var(--accent-red); 
+  color: var(--accent-red); 
+  padding: 12px; 
+  border-radius: 12px; 
+  font-weight: 600; 
+  cursor: pointer; 
+}
 
 .utility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
 .control-stack { display: flex; flex-direction: column; gap: 12px; }
 .header-flex { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.8rem; color: var(--text-dim); }
 .back-link-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; display: block; margin: 30px auto; text-decoration: underline; width: 100%; font-family: inherit; }
 
+/* --- フラッシュカード --- */
 .flashcard-glass {
   background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-  border: 1px solid var(--border); border-radius: 32px;
-  padding: 50px 20px; min-height: 240px; display: flex; flex-direction: column;
-  justify-content: center; text-align: center; cursor: pointer; margin-bottom: 25px;
+  border: 1px solid var(--border); 
+  border-radius: 32px;
+  padding: 50px 20px; 
+  min-height: 240px; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  text-align: center; 
+  cursor: pointer; 
+  margin-bottom: 25px;
   backdrop-filter: blur(20px);
 }
 .card-front h1 { font-size: 3rem; color: #fff; -webkit-text-fill-color: initial; }
+.example-text { color: var(--text-dim); font-size: 0.9rem; margin-top: 15px; line-height: 1.5; }
+
+/* --- クイズ --- */
 .quiz-question-text { font-size: 2.2rem; text-align: center; margin-bottom: 30px; }
 .quiz-option-glass {
-  background: var(--panel); border: 1px solid var(--border);
-  padding: 18px; border-radius: 16px; margin-bottom: 10px;
-  cursor: pointer; font-weight: 600; transition: 0.2s;
+  background: var(--panel); 
+  border: 1px solid var(--border);
+  padding: 18px; 
+  border-radius: 16px; 
+  margin-bottom: 10px;
+  cursor: pointer; 
+  font-weight: 600; 
+  transition: 0.2s;
 }
 .quiz-option-glass:hover { background: #fff; color: #000; }
 
+/* --- リスト表示 --- */
 .overview-list { max-height: 400px; overflow-y: auto; padding-right: 8px; margin-top: 10px; }
 .overview-item {
-  background: var(--panel); border: 1px solid var(--border); padding: 15px;
-  border-radius: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+  background: var(--panel); 
+  border: 1px solid var(--border); 
+  padding: 15px;
+  border-radius: 14px; 
+  margin-bottom: 10px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
 }
 .item-info { display: flex; flex-direction: column; }
 .item-word { font-weight: 800; font-size: 1.1rem; color: var(--accent-blue); }
 .item-meaning { font-size: 0.85rem; color: var(--text-dim); }
 .icon-btn-delete { background: none; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; padding: 5px 8px; color: var(--text-dim); }
 
+/* --- スクロールバー --- */
 .custom-scrollbar::-webkit-scrollbar { width: 5px; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* --- フッター・アニメーション --- */
 .app-footer { margin-top: 50px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; }
 .app-footer p { color: var(--text-dim); font-size: 0.8rem; margin: 4px 0; }
 .fade-in { animation: fadeIn 0.4s ease-out; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { 
+  from { opacity: 0; transform: translateY(10px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
 
-.result-glass { background: var(--panel); padding: 40px; border-radius: 32px; text-align: center; border: 1px solid var(--border); }
-.result-rate-display { font-size: 4rem; font-weight: 800; color: var(--accent-green); margin: 15px 0; }
+/* --- 結果画面 --- */
+.result-glass { 
+  background: var(--panel); 
+  padding: 40px; 
+  border-radius: 32px; 
+  text-align: center; 
+  border: 1px solid var(--border); 
+}
+.result-rate-display { 
+  font-size: 4rem; 
+  font-weight: 800; 
+  color: var(--accent-green); 
+  margin: 15px 0; 
+}
