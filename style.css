@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap');
 
 :root {
   --bg: #0b0f1a;
@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
   background-color: var(--bg);
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.05) 0%, transparent 40%),
@@ -27,8 +27,8 @@ body {
 
 .container { width: 100%; max-width: 440px; padding: 40px 20px; }
 
-h1 { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 0.5rem; background: linear-gradient(to right, #00d2ff, #9d50bb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.subtitle { text-align: center; color: var(--text-dim); margin-bottom: 2.5rem; font-size: 0.9rem; }
+h1 { font-size: 2.8rem; font-weight: 800; text-align: center; margin-bottom: 0.5rem; background: linear-gradient(to right, #00d2ff, #9d50bb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { text-align: center; color: var(--text-dim); margin-bottom: 2.5rem; font-size: 1rem; font-weight: 600; }
 
 /* Level Cards */
 .level-card {
@@ -61,40 +61,12 @@ h1 { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 0.5
   box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
 }
 
-.neon-btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-  color: #fff;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-}
-
-.neon-btn-danger {
-  background: rgba(255, 75, 43, 0.1);
-  border: 1px solid var(--accent-red);
-  color: var(--accent-red);
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-}
-
-.neon-btn-outline {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 12px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-}
+.neon-btn-secondary { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; width: 100%; }
+.neon-btn-danger { background: rgba(255, 75, 43, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; width: 100%; }
+.neon-btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 12px; cursor: pointer; font-weight: 600; }
 .neon-btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--text); }
 
-/* Mode Selection Buttons */
+/* Mode Selection */
 .mode-selection-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 30px 0; }
 .mode-main-btn {
   background: var(--panel);
@@ -110,6 +82,7 @@ h1 { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 0.5
 .mode-main-btn:hover { border-color: var(--accent-green); background: rgba(0, 255, 135, 0.05); }
 .mode-main-btn .icon { font-size: 2rem; margin-bottom: 8px; }
 .mode-main-btn .text { font-weight: 700; color: #fff; font-size: 1.1rem; }
+.mode-main-btn .sub-text { font-size: 0.75rem; color: var(--text-dim); }
 
 /* Flashcards */
 .flashcard {
@@ -128,27 +101,22 @@ h1 { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 0.5
 }
 .card-front h1 { font-size: 3.2rem; margin: 0; color: #fff; -webkit-text-fill-color: initial; }
 .pos-tag { color: var(--accent-blue); font-weight: 600; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; }
-.example-text { color: var(--text-dim); margin-top: 24px; font-style: italic; font-size: 0.95rem; }
+.example-text { color: var(--text-dim); margin-top: 24px; font-style: italic; font-size: 1rem; }
 
 /* Quiz */
 .quiz-question { font-size: 2.2rem; text-align: center; margin-bottom: 40px; }
-.quiz-option {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 20px;
-  border-radius: 16px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-}
+.quiz-option { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-radius: 16px; margin-bottom: 12px; cursor: pointer; font-weight: 600; transition: 0.2s; }
 .quiz-option:hover { background: #fff; color: #000; transform: translateX(10px); }
 
-/* Utils */
+/* Footer & Utils */
+.app-footer { margin-top: 50px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; }
+.app-footer p { color: var(--text-dim); font-size: 0.8rem; margin: 4px 0; letter-spacing: 1px; }
+.app-footer .footer-sub { color: var(--accent-blue); font-weight: 600; }
+
 .utility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
 .control-area { display: flex; flex-direction: column; gap: 12px; }
 .header-flex { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.8rem; color: var(--text-dim); }
-.back-link { background: none; border: none; color: var(--text-dim); cursor: pointer; display: block; margin: 30px auto; text-decoration: underline; width: 100%; }
+.back-link { background: none; border: none; color: var(--text-dim); cursor: pointer; display: block; margin: 30px auto; text-decoration: underline; width: 100%; font-family: inherit; }
 .fade-in { animation: fadeIn 0.4s ease-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
