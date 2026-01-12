@@ -1,12 +1,12 @@
 /**
- * Vocab Studio 4.0 - Perfect Logic & Layout Edition
+ * Vocab Studio 5.0 - Professional Workflow Edition
  */
 
-let currentLevel = null;
 let words = [];
 let index = 0;
 let showBack = false;
 let sessionType = null; 
+let currentLevel = null;
 
 const STORAGE_KEY = "vocabProgress";
 let progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
@@ -31,14 +31,9 @@ function home() {
         <div class='level-card card-5' onclick='loadLevel(5)'>Level 5<span>最上級・Master</span></div>
       </div>
 
-      <div class="main-action-area">
-        <button class="neon-btn-primary main-glow" onclick="showReviewOverview()">
-           📋 見直し単語を一括確認
-        </button>
-        <div class="utility-grid">
-          <button class="neon-btn-outline" onclick="reviewWords()">🃏 復習カード</button>
-          <button class="neon-btn-outline" onclick="wrongWords()">✏️ 弱点クイズ</button>
-        </div>
+      <div class="utility-grid">
+        <button class="neon-btn-outline" onclick="showCheckedWords()">🔁 チェックした単語</button>
+        <button class="neon-btn-outline" onclick="showMistakenWords()">❌ 間違えた単語</button>
       </div>
 
       <footer class="app-footer">
@@ -49,22 +44,26 @@ function home() {
   `);
 }
 
-// --- Review Overview ---
-function showReviewOverview() {
+// --- ① チェックした単語リスト ---
+function showCheckedWords() {
   const list = Object.keys(progress)
     .filter(key => progress[key].review && progress[key].wordData)
     .map(key => progress[key].wordData);
 
-  if (list.length === 0) return alert("見直し単語はまだ登録されていません。");
+  if (list.length === 0) return alert("チェックした単語はありません。");
 
   setView(`
     <div class="fade-in">
       <div class="header-flex">
-        <span class="mode-title">Review Overview</span>
+        <span class="mode-title">Checked Words List</span>
         <span class="counter">Total: ${list.length}</span>
       </div>
-      <h2 class="section-title">見直し単語一覧</h2>
+      <h2 class="section-title">チェックした単語</h2>
       
+      <button class="neon-btn-primary main-glow action-spacing" onclick="startReviewFlash()">
+         🃏 このリストをカードで復習
+      </button>
+
       <div class="overview-list custom-scrollbar">
         ${list.map(w => `
           <div class="overview-item">
@@ -72,9 +71,7 @@ function showReviewOverview() {
               <span class="item-word">${w.word}</span>
               <span class="item-meaning">${w.meaning}</span>
             </div>
-            <button class="icon-btn-delete" onclick="removeItemFromOverview('${w.word}')">
-              <span class="icon">🗑️</span>
-            </button>
+            <button class="icon-btn-delete" onclick="removeReviewItem('${w.word}')">🗑️</button>
           </div>
         `).join("")}
       </div>
@@ -84,15 +81,70 @@ function showReviewOverview() {
   `);
 }
 
-function removeItemFromOverview(wordText) {
+function startReviewFlash() {
+  const list = Object.keys(progress)
+    .filter(key => progress[key].review && progress[key].wordData)
+    .map(key => progress[key].wordData);
+  words = list;
+  sessionType = "review";
+  flashMode();
+}
+
+function removeReviewItem(wordText) {
   if (confirm(`「${wordText}」をリストから削除しますか？`)) {
     progress[wordText].review = false;
     saveProgress();
-    showReviewOverview();
+    showCheckedWords();
   }
 }
 
-// --- Data Loading ---
+// --- ② 間違えた単語リスト ---
+function showMistakenWords() {
+  const list = Object.keys(progress)
+    .filter(key => progress[key].wrong && progress[key].wordData)
+    .map(key => progress[key].wordData);
+
+  if (list.length === 0) return alert("間違えた単語はありません。");
+
+  setView(`
+    <div class="fade-in">
+      <div class="header-flex">
+        <span class="mode-title">Mistaken Words List</span>
+        <span class="counter">Total: ${list.length}</span>
+      </div>
+      <h2 class="section-title">間違えた単語</h2>
+      
+      <button class="neon-btn-primary main-glow action-spacing" onclick="startMistakenQuiz()">
+         ✏️ このリストをクイズで復習
+      </button>
+
+      <div class="overview-list custom-scrollbar">
+        ${list.map(w => `
+          <div class="overview-item">
+            <div class="item-info">
+              <span class="item-word">${w.word}</span>
+              <span class="item-meaning">${w.meaning}</span>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+
+      <button class="back-link-btn" onclick="home()">← ホームに戻る</button>
+    </div>
+  `);
+}
+
+function startMistakenQuiz() {
+  const list = Object.keys(progress)
+    .filter(key => progress[key].wrong && progress[key].wordData)
+    .map(key => progress[key].wordData);
+  words = list;
+  sessionType = "wrong";
+  quizMode();
+}
+
+// --- 以下、既存の学習ロジックの改善・維持 ---
+
 async function loadLevel(lv) {
   currentLevel = lv;
   sessionType = "level";
@@ -101,44 +153,34 @@ async function loadLevel(lv) {
     words = await res.json();
     index = 0;
     modeSelect();
-  } catch (e) {
-    alert("読み込み失敗");
-  }
+  } catch (e) { alert("読み込み失敗"); }
 }
 
-// --- Mode Selection ---
 function modeSelect() {
   setView(`
     <div class="mode-container fade-in">
       <div class="level-badge">Level ${currentLevel}</div>
       <h2 class="section-title">学習モードを選択</h2>
-      
       <div class="mode-selection-grid">
         <button class="mode-main-btn" onclick="flashMode()">
           <span class="icon">🃏</span>
           <span class="text">フラッシュカード</span>
-          <span class="sub-text">Flashcards</span>
         </button>
-        
         <button class="mode-main-btn" onclick="quizMode()">
           <span class="icon">✏️</span>
           <span class="text">4択クイズ</span>
-          <span class="sub-text">4-Choice Quiz</span>
         </button>
       </div>
-
       <button class="back-link-btn" onclick="home()">← ホームに戻る</button>
     </div>
   `);
 }
 
-// --- Flashcards ---
 function flashMode() { index = 0; showFlash(); }
 function showFlash() {
   if (words.length === 0) return home();
   const w = words[index];
   const p = getProgress(w.word);
-  
   const content = showBack 
     ? `<div class="card-back"><h2>${w.meaning}</h2><p class="example-text">${w.example}</p></div>` 
     : `<div class="card-front"><h1>${w.word}</h1><p class="pos-tag">${w.pos}</p></div>`;
@@ -146,7 +188,7 @@ function showFlash() {
   setView(`
     <div class="fade-in">
       <div class="header-flex">
-        <span class="mode-title">Flashcards</span>
+        <span class="mode-title">${sessionType === 'review' ? '復習カード' : 'Flashcards'}</span>
         <span class="counter">${index + 1} / ${words.length}</span>
       </div>
       <div class='flashcard-glass' onclick='toggleFlash()'>${content}</div>
@@ -157,7 +199,7 @@ function showFlash() {
           : `<button class="neon-btn-secondary" onclick="markReview()">🔁 リストに追加</button>`
         }
       </div>
-      <button class="back-link-btn" onclick="${sessionType === 'level' ? 'modeSelect()' : 'home()'}">← 戻る</button>
+      <button class="back-link-btn" onclick="${sessionType === 'level' ? 'modeSelect()' : (sessionType === 'review' ? 'showCheckedWords()' : 'home()')}">← 戻る</button>
     </div>
   `);
 }
@@ -168,10 +210,8 @@ function nextFlash() { index = (index + 1) % words.length; showBack = false; sho
 function markReview() {
   const w = words[index];
   const p = getProgress(w.word);
-  p.review = true;
-  p.wordData = w; // 単語データ丸ごと保存
-  saveProgress();
-  showFlash();
+  p.review = true; p.wordData = w;
+  saveProgress(); showFlash();
 }
 
 function unmarkReview() {
@@ -179,15 +219,13 @@ function unmarkReview() {
   saveProgress();
   if (sessionType === "review") {
       words = words.filter(w => w.word !== words[index].word);
-      if (words.length === 0) { alert("全ての復習が完了しました！"); home(); } 
+      if (words.length === 0) { alert("完了！"); showCheckedWords(); } 
       else { index = index % words.length; showFlash(); }
   } else { showFlash(); }
 }
 
-// --- Quiz ---
-let quizIndex = 0;
-let score = 0;
 function quizMode() { quizIndex = 0; score = 0; nextQuiz(); }
+let quizIndex = 0; let score = 0;
 function nextQuiz() {
   if (quizIndex >= words.length) return quizResult();
   const q = words[quizIndex];
@@ -195,14 +233,14 @@ function nextQuiz() {
   setView(`
     <div class="fade-in">
       <div class="header-flex">
-        <span class="mode-title">Quiz</span>
+        <span class="mode-title">${sessionType === 'wrong' ? '弱点クイズ' : 'Quiz'}</span>
         <span class="counter">${quizIndex + 1} / ${words.length}</span>
       </div>
       <h3 class="quiz-question-text">${q.word}</h3>
       <div class="options-container">
         ${options.map(o => `<div class='quiz-option-glass' onclick='selectQuiz("${o}")'>${o}</div>`).join("")}
       </div>
-      <button class="back-link-btn" onclick="${sessionType === 'level' ? 'modeSelect()' : 'home()'}">← クイズを中断</button>
+      <button class="back-link-btn" onclick="${sessionType === 'level' ? 'modeSelect()' : (sessionType === 'wrong' ? 'showMistakenWords()' : 'home()')}">← 戻る</button>
     </div>
   `);
 }
@@ -210,60 +248,26 @@ function nextQuiz() {
 function selectQuiz(opt) {
   const q = words[quizIndex];
   const p = getProgress(q.word);
-  if (opt === q.meaning) { 
-    score++; 
-    p.correctCount++; 
-    p.wrong = false; 
-  } else { 
-    p.wrong = true; 
-    p.wrongCount++; 
-    p.wordData = q; // 弱点リスト用に保存
-  }
-  saveProgress();
-  quizIndex++;
-  nextQuiz();
+  if (opt === q.meaning) { score++; p.correctCount++; p.wrong = false; } 
+  else { p.wrong = true; p.wrongCount++; p.wordData = q; }
+  saveProgress(); quizIndex++; nextQuiz();
 }
 
 function quizResult() {
   const rate = Math.round((score / words.length) * 100);
   setView(`
     <div class="result-glass fade-in">
-      <div class="result-title">Quiz Finished!</div>
+      <div class="result-title">Finish!</div>
       <div class="result-rate-display">${rate}%</div>
       <p>${words.length}問中 ${score}問 正解</p>
       <button class="neon-btn-primary main-glow" onclick="quizMode()">Retry</button>
-      <button class="back-link-btn" onclick="home()">Back to Home</button>
+      <button class="back-link-btn" onclick="${sessionType === 'wrong' ? 'showMistakenWords()' : 'home()'}">リストに戻る</button>
     </div>
   `);
 }
 
-// --- Home Screen Logic (Fixed) ---
-function reviewWords() {
-  const list = Object.keys(progress)
-    .filter(key => progress[key].review && progress[key].wordData)
-    .map(key => progress[key].wordData);
-
-  if (list.length === 0) return alert("見直す単語はありません");
-  words = list;
-  sessionType = "review";
-  flashMode();
-}
-
-function wrongWords() {
-  const list = Object.keys(progress)
-    .filter(key => progress[key].wrong && progress[key].wordData)
-    .map(key => progress[key].wordData);
-
-  if (list.length === 0) return alert("間違えた単語はありません");
-  words = list;
-  sessionType = "wrong";
-  quizMode();
-}
-
-// --- Utils ---
 function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
 function getRandomMeanings(correct, count) {
-  // 全体のwordsから取得できない場合（Homeからの場合）を考慮し、意味リストを抽出
   const all = words.map(w => w.meaning).filter(m => m !== correct);
   return shuffle(all).slice(0, count);
 }
