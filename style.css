@@ -83,7 +83,7 @@ h1 {
   color: var(--text-dim); 
 }
 
-/* --- 学習モード選択 --- */
+/* --- 学習設定画面 --- */
 .mode-selection-grid { 
   display: grid; 
   grid-template-columns: 1fr 1fr; 
@@ -112,7 +112,6 @@ h1 {
 .mode-main-btn .icon { font-size: 2.2rem; margin-bottom: 12px; }
 .mode-main-btn .text { font-weight: 700; font-size: 1rem; color: #fff; }
 
-/* --- 【新機能】出題数選択エリア --- */
 .count-selector-area {
   margin: 25px 0;
   text-align: center;
@@ -123,9 +122,9 @@ h1 {
   margin-bottom: 12px;
 }
 .count-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 10px; 
 }
 .count-btn {
   background: var(--panel);
@@ -138,10 +137,7 @@ h1 {
   transition: 0.2s;
   font-family: inherit;
 }
-.count-btn:hover {
-  border-color: var(--accent-blue);
-  color: #fff;
-}
+.count-btn:hover { border-color: var(--accent-blue); color: #fff; }
 .count-btn.active {
   background: var(--accent-blue);
   border-color: var(--accent-blue);
@@ -167,6 +163,8 @@ h1 {
   box-shadow: 0 8px 25px rgba(0, 210, 255, 0.5); 
 }
 
+.action-spacing { margin-bottom: 20px; }
+
 .neon-btn-outline {
   background: transparent; 
   border: 1px solid var(--border);
@@ -177,29 +175,10 @@ h1 {
   font-weight: 600; 
   width: 100%;
 }
-.neon-btn-outline:hover { 
-  background: rgba(255,255,255,0.05); 
-  border-color: #fff; 
-}
+.neon-btn-outline:hover { background: rgba(255,255,255,0.05); border-color: #fff; }
 
-.neon-btn-secondary { 
-  background: rgba(255,255,255,0.08); 
-  border: 1px solid var(--border); 
-  color: #fff; 
-  padding: 12px; 
-  border-radius: 12px; 
-  font-weight: 600; 
-  cursor: pointer; 
-}
-.neon-btn-danger { 
-  background: rgba(255, 75, 43, 0.1); 
-  border: 1px solid var(--accent-red); 
-  color: var(--accent-red); 
-  padding: 12px; 
-  border-radius: 12px; 
-  font-weight: 600; 
-  cursor: pointer; 
-}
+.neon-btn-secondary { background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+.neon-btn-danger { background: rgba(255, 75, 43, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
 
 .utility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
 .control-stack { display: flex; flex-direction: column; gap: 12px; }
@@ -255,30 +234,12 @@ h1 {
 .item-meaning { font-size: 0.85rem; color: var(--text-dim); }
 .icon-btn-delete { background: none; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; padding: 5px 8px; color: var(--text-dim); }
 
-/* --- スクロールバー --- */
-.custom-scrollbar::-webkit-scrollbar { width: 5px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
 /* --- フッター・アニメーション --- */
 .app-footer { margin-top: 50px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; }
 .app-footer p { color: var(--text-dim); font-size: 0.8rem; margin: 4px 0; }
 .fade-in { animation: fadeIn 0.4s ease-out; }
-@keyframes fadeIn { 
-  from { opacity: 0; transform: translateY(10px); } 
-  to { opacity: 1; transform: translateY(0); } 
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* --- 結果画面 --- */
-.result-glass { 
-  background: var(--panel); 
-  padding: 40px; 
-  border-radius: 32px; 
-  text-align: center; 
-  border: 1px solid var(--border); 
-}
-.result-rate-display { 
-  font-size: 4rem; 
-  font-weight: 800; 
-  color: var(--accent-green); 
-  margin: 15px 0; 
-}
+.result-glass { background: var(--panel); padding: 40px; border-radius: 32px; text-align: center; border: 1px solid var(--border); }
+.result-rate-display { font-size: 4rem; font-weight: 800; color: var(--accent-green); margin: 15px 0; }
+.level-badge { display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.1); border-radius: 20px; font-size: 0.7rem; color: var(--accent-blue); margin-bottom: 10px; }
