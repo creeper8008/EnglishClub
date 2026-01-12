@@ -1,5 +1,5 @@
 /**
- * 単語トレーナー 5.5 - Bug Fix Edition
+ * 単語トレーナー 5.6 - Robust Grid Edition
  */
 
 let allWords = []; 
@@ -16,7 +16,7 @@ function setView(html) {
   document.getElementById("app").innerHTML = html;
 }
 
-// --- Home ---
+// --- ホーム画面 ---
 function home() {
   sessionType = null;
   setView(`
@@ -44,7 +44,7 @@ function home() {
   `);
 }
 
-// --- List Views ---
+// --- リスト表示 ---
 function showCheckedWords() {
   const list = Object.keys(progress).filter(k => progress[k].review && progress[k].wordData).map(k => progress[k].wordData);
   if (list.length === 0) { alert("チェックした単語はありません。"); home(); return; }
@@ -97,7 +97,7 @@ function showMistakenWords() {
   `);
 }
 
-// --- Session Logic ---
+// --- トレーニング設定画面 ---
 async function loadLevel(lv) {
   currentLevel = lv; sessionType = "level";
   try {
@@ -112,14 +112,18 @@ function modeSelect() {
     <div class="mode-container fade-in">
       <div class="level-badge">${sessionType==='level'?'Level '+currentLevel:'復習モード'}</div>
       <h2 class="section-title">トレーニング設定</h2>
+      
       <div class="mode-selection-grid">
         <button class="mode-main-btn" onclick="prepareSession('flash')">
-          <span class="icon">🃏</span><span class="text">カード</span>
+          <span class="icon">🃏</span>
+          <span class="text">カード</span>
         </button>
         <button class="mode-main-btn" onclick="prepareSession('quiz')">
-          <span class="icon">✏️</span><span class="text">クイズ</span>
+          <span class="icon">✏️</span>
+          <span class="text">クイズ</span>
         </button>
       </div>
+
       <div class="count-selector-area">
         <p class="small-label">出題数を選択（全${allWords.length}単語）</p>
         <div class="count-grid">
@@ -129,6 +133,7 @@ function modeSelect() {
           <button class="count-btn" id="btn-all" onclick="selectCount(0)">ALL</button>
         </div>
       </div>
+
       <button class="back-link-btn" onclick="${backOp}">← 戻る</button>
     </div>
   `);
@@ -148,7 +153,7 @@ function prepareSession(t) {
   if(t==='flash') flashMode(); else quizMode();
 }
 
-// --- Flashcard ---
+// --- フラッシュカード本体 ---
 function flashMode() { index = 0; showFlash(); }
 function showFlash() {
   const w = words[index]; const p = getProgress(w.word);
@@ -158,7 +163,7 @@ function showFlash() {
 
   setView(`
     <div class="fade-in">
-      <div class="header-flex"><span>Card</span><span>${index+1} / ${words.length}</span></div>
+      <div class="header-flex"><span>Card Mode</span><span>${index+1} / ${words.length}</span></div>
       <div class='flashcard-glass' onclick='toggleFlash()'>${content}</div>
       <div class="control-stack">
         <button class="neon-btn-primary main-glow" onclick='nextFlash()'>${index+1===words.length?'トレーニング終了':'次へ →'}</button>
@@ -173,24 +178,19 @@ function showFlash() {
 function nextFlash(){ if(index+1>=words.length) modeSelect(); else { index++; showBack=false; showFlash(); } }
 function toggleFlash(){ showBack=!showBack; showFlash(); }
 
-// --- Quiz ---
+// --- クイズ本体 ---
 let quizIndex=0; let score=0;
 function quizMode(){ quizIndex=0; score=0; nextQuiz(); }
 function nextQuiz() {
   if(quizIndex>=words.length) return quizResult();
   const q = words[quizIndex];
-  
-  // 修正：必ず正解を含めるロジック
   const correct = q.meaning;
-  const others = allWords
-    .map(w => w.meaning)
-    .filter(m => m !== correct);
-  const shuffledOthers = others.sort(() => Math.random() - 0.5);
-  const finalOptions = [correct, ...shuffledOthers.slice(0, 3)].sort(() => Math.random() - 0.5);
+  const others = allWords.map(w => w.meaning).filter(m => m !== correct);
+  const finalOptions = [correct, ...others.sort(()=>Math.random()-0.5).slice(0, 3)].sort(()=>Math.random()-0.5);
 
   setView(`
     <div class="fade-in">
-      <div class="header-flex"><span>Quiz</span><span>${quizIndex+1} / ${words.length}</span></div>
+      <div class="header-flex"><span>Quiz Mode</span><span>${quizIndex+1} / ${words.length}</span></div>
       <h3 class="quiz-question-text">${q.word}</h3>
       <div class="options-container">
         ${finalOptions.map(o=>`<div class='quiz-option-glass' onclick='selectQuiz("${o}")'>${o}</div>`).join("")}
