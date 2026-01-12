@@ -1,5 +1,5 @@
 /**
- * Vocab Studio 3.5 - The Ultimate Aesthetic Edition
+ * Vocab Studio 4.0 - Perfect Logic & Layout Edition
  */
 
 let currentLevel = null;
@@ -52,8 +52,8 @@ function home() {
 // --- Review Overview ---
 function showReviewOverview() {
   const list = Object.keys(progress)
-    .filter(key => progress[key].review)
-    .map(key => ({ word: key, ...progress[key] }));
+    .filter(key => progress[key].review && progress[key].wordData)
+    .map(key => progress[key].wordData);
 
   if (list.length === 0) return alert("見直し単語はまだ登録されていません。");
 
@@ -70,7 +70,7 @@ function showReviewOverview() {
           <div class="overview-item">
             <div class="item-info">
               <span class="item-word">${w.word}</span>
-              <span class="item-meaning">${w.meaning || "---"}</span>
+              <span class="item-meaning">${w.meaning}</span>
             </div>
             <button class="icon-btn-delete" onclick="removeItemFromOverview('${w.word}')">
               <span class="icon">🗑️</span>
@@ -135,8 +135,10 @@ function modeSelect() {
 // --- Flashcards ---
 function flashMode() { index = 0; showFlash(); }
 function showFlash() {
+  if (words.length === 0) return home();
   const w = words[index];
   const p = getProgress(w.word);
+  
   const content = showBack 
     ? `<div class="card-back"><h2>${w.meaning}</h2><p class="example-text">${w.example}</p></div>` 
     : `<div class="card-front"><h1>${w.word}</h1><p class="pos-tag">${w.pos}</p></div>`;
@@ -167,7 +169,7 @@ function markReview() {
   const w = words[index];
   const p = getProgress(w.word);
   p.review = true;
-  p.meaning = w.meaning;
+  p.wordData = w; // 単語データ丸ごと保存
   saveProgress();
   showFlash();
 }
@@ -177,7 +179,8 @@ function unmarkReview() {
   saveProgress();
   if (sessionType === "review") {
       words = words.filter(w => w.word !== words[index].word);
-      if (words.length === 0) { alert("完了！"); home(); } else { index = index % words.length; showFlash(); }
+      if (words.length === 0) { alert("全ての復習が完了しました！"); home(); } 
+      else { index = index % words.length; showFlash(); }
   } else { showFlash(); }
 }
 
@@ -207,8 +210,15 @@ function nextQuiz() {
 function selectQuiz(opt) {
   const q = words[quizIndex];
   const p = getProgress(q.word);
-  if (opt === q.meaning) { score++; p.correctCount++; p.wrong = false; }
-  else { p.wrong = true; p.wrongCount++; p.meaning = q.meaning; }
+  if (opt === q.meaning) { 
+    score++; 
+    p.correctCount++; 
+    p.wrong = false; 
+  } else { 
+    p.wrong = true; 
+    p.wrongCount++; 
+    p.wordData = q; // 弱点リスト用に保存
+  }
   saveProgress();
   quizIndex++;
   nextQuiz();
@@ -227,17 +237,40 @@ function quizResult() {
   `);
 }
 
+// --- Home Screen Logic (Fixed) ---
+function reviewWords() {
+  const list = Object.keys(progress)
+    .filter(key => progress[key].review && progress[key].wordData)
+    .map(key => progress[key].wordData);
+
+  if (list.length === 0) return alert("見直す単語はありません");
+  words = list;
+  sessionType = "review";
+  flashMode();
+}
+
+function wrongWords() {
+  const list = Object.keys(progress)
+    .filter(key => progress[key].wrong && progress[key].wordData)
+    .map(key => progress[key].wordData);
+
+  if (list.length === 0) return alert("間違えた単語はありません");
+  words = list;
+  sessionType = "wrong";
+  quizMode();
+}
+
 // --- Utils ---
 function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
 function getRandomMeanings(correct, count) {
-  const all = words.filter(w => w.meaning !== correct).map(w => w.meaning);
+  // 全体のwordsから取得できない場合（Homeからの場合）を考慮し、意味リストを抽出
+  const all = words.map(w => w.meaning).filter(m => m !== correct);
   return shuffle(all).slice(0, count);
 }
 function getProgress(word) {
-  if (!progress[word]) progress[word] = { review: false, wrong: false, correctCount: 0, wrongCount: 0 };
+  if (!progress[word]) progress[word] = { review: false, wrong: false, correctCount: 0, wrongCount: 0, wordData: null };
   return progress[word];
 }
 function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
-function findInJSON(wordText) { return words.find(w => w.word === wordText) || {}; }
 
 home();
