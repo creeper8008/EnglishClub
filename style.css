@@ -26,9 +26,8 @@ body {
 
 h1 { font-size: 3rem; font-weight: 800; text-align: center; margin: 0; background: linear-gradient(to right, #00d2ff, #9d50bb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .subtitle { text-align: center; color: var(--text-dim); margin-bottom: 2.5rem; font-size: 0.95rem; font-weight: 600; }
-.section-title { text-align: center; font-size: 1.1rem; margin-bottom: 20px; font-weight: 700; }
+.section-title { text-align: center; font-size: 1.1rem; margin-bottom: 15px; font-weight: 700; color: #fff; }
 
-/* Level Cards */
 .level-card {
   background: var(--panel); border: 1px solid var(--border); padding: 18px 24px;
   margin-bottom: 12px; border-radius: 18px; cursor: pointer;
@@ -38,26 +37,17 @@ h1 { font-size: 3rem; font-weight: 800; text-align: center; margin: 0; backgroun
 .level-card:hover { transform: translateX(8px); border-color: var(--accent-blue); background: rgba(255,255,255,0.08); }
 .level-card span { font-size: 0.75rem; color: var(--text-dim); }
 
-/* Mode Selection Grid (FIXED: Equal Heights & Widths) */
-.mode-selection-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2列均等 */
-  gap: 16px;
-  margin: 20px 0;
-}
+.mode-selection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
 .mode-main-btn {
   background: var(--panel); border: 1px solid var(--border);
-  padding: 30px 15px; border-radius: 24px; cursor: pointer;
+  padding: 35px 15px; border-radius: 24px; cursor: pointer;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: 0.3s; height: 100%; /* グリッド内で高さを揃える */
-  box-sizing: border-box;
+  transition: 0.3s; height: 100%; box-sizing: border-box;
 }
 .mode-main-btn:hover { border-color: var(--accent-green); transform: translateY(-5px); background: rgba(0, 255, 135, 0.05); }
-.mode-main-btn .icon { font-size: 2.2rem; margin-bottom: 10px; }
-.mode-main-btn .text { font-weight: 700; font-size: 1rem; color: #fff; text-align: center; }
-.mode-main-btn .sub-text { font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; }
+.mode-main-btn .icon { font-size: 2.2rem; margin-bottom: 12px; }
+.mode-main-btn .text { font-weight: 700; font-size: 1rem; color: #fff; }
 
-/* Primary Buttons */
 .neon-btn-primary {
   background: linear-gradient(135deg, #00d2ff, #3a7bd5);
   color: #000; border: none; padding: 18px; border-radius: 16px;
@@ -65,6 +55,7 @@ h1 { font-size: 3rem; font-weight: 800; text-align: center; margin: 0; backgroun
 }
 .main-glow { box-shadow: 0 5px 20px rgba(0, 210, 255, 0.3); }
 .main-glow:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 210, 255, 0.5); }
+.action-spacing { margin-bottom: 25px; }
 
 .neon-btn-outline {
   background: transparent; border: 1px solid var(--border);
@@ -76,14 +67,11 @@ h1 { font-size: 3rem; font-weight: 800; text-align: center; margin: 0; backgroun
 .neon-btn-secondary { background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
 .neon-btn-danger { background: rgba(255, 75, 43, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
 
-/* Layouts */
-.main-action-area { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-.utility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.utility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
 .control-stack { display: flex; flex-direction: column; gap: 12px; }
 .header-flex { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.8rem; color: var(--text-dim); }
-.back-link-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; display: block; margin: 30px auto; text-decoration: underline; width: 100%; }
+.back-link-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; display: block; margin: 30px auto; text-decoration: underline; width: 100%; font-family: inherit; }
 
-/* Flashcards & Quiz */
 .flashcard-glass {
   background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
   border: 1px solid var(--border); border-radius: 32px;
@@ -100,26 +88,22 @@ h1 { font-size: 3rem; font-weight: 800; text-align: center; margin: 0; backgroun
 }
 .quiz-option-glass:hover { background: #fff; color: #000; }
 
-/* Overview List */
-.overview-list { max-height: 350px; overflow-y: auto; padding-right: 8px; }
+.overview-list { max-height: 400px; overflow-y: auto; padding-right: 8px; margin-top: 10px; }
 .overview-item {
   background: var(--panel); border: 1px solid var(--border); padding: 15px;
   border-radius: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
 }
+.item-info { display: flex; flex-direction: column; }
 .item-word { font-weight: 800; font-size: 1.1rem; color: var(--accent-blue); }
-.item-meaning { font-size: 0.85rem; color: var(--text-dim); margin-left: 10px; }
-.icon-btn-delete { background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; cursor: pointer; padding: 5px 8px; }
+.item-meaning { font-size: 0.85rem; color: var(--text-dim); }
+.icon-btn-delete { background: none; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; padding: 5px 8px; color: var(--text-dim); }
 
-/* Scrollbar */
 .custom-scrollbar::-webkit-scrollbar { width: 5px; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
-/* Footer */
 .app-footer { margin-top: 50px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; }
 .app-footer p { color: var(--text-dim); font-size: 0.8rem; margin: 4px 0; }
 .fade-in { animation: fadeIn 0.4s ease-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Results */
 .result-glass { background: var(--panel); padding: 40px; border-radius: 32px; text-align: center; border: 1px solid var(--border); }
 .result-rate-display { font-size: 4rem; font-weight: 800; color: var(--accent-green); margin: 15px 0; }
