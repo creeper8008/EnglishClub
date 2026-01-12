@@ -1,12 +1,12 @@
 /**
- * Vocab Studio 2.5 - Localization & Credit Edition
+ * Vocab Studio 3.0 - Overview & Full Management Edition
  */
 
 let currentLevel = null;
 let words = [];
 let index = 0;
 let showBack = false;
-let sessionType = null; // "level", "review", "wrong"
+let sessionType = null; 
 
 const STORAGE_KEY = "vocabProgress";
 let progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
@@ -31,9 +31,12 @@ function home() {
         <div class='level-card card-5' onclick='loadLevel(5)'>Level 5<span>最上級・Master</span></div>
       </div>
 
-      <div class="utility-grid">
-        <button class="neon-btn-outline" onclick="reviewWords()">🔁 見直す単語リスト</button>
-        <button class="neon-btn-outline" onclick="wrongWords()">❌ 間違えた単語リスト</button>
+      <div class="main-action-area">
+        <button class="neon-btn-primary" onclick="showReviewOverview()">📋 見直し単語を一括確認</button>
+        <div class="utility-grid">
+          <button class="neon-btn-outline" onclick="reviewWords()">🃏 復習カード</button>
+          <button class="neon-btn-outline" onclick="wrongWords()">✏️ 弱点クイズ</button>
+        </div>
       </div>
 
       <footer class="app-footer">
@@ -42,6 +45,48 @@ function home() {
       </footer>
     </div>
   `);
+}
+
+// --- Review Overview (新機能: 全体像を見る) ---
+function showReviewOverview() {
+  const list = Object.keys(progress)
+    .filter(key => progress[key].review)
+    .map(key => ({ word: key, ...progress[key] }));
+
+  if (list.length === 0) return alert("見直す単語はまだ登録されていません。");
+
+  setView(`
+    <div class="fade-in">
+      <div class="header-flex">
+        <span class="mode-title">Review Overview</span>
+        <span class="counter">合計 ${list.length} 単語</span>
+      </div>
+      <h2>見直し単語一覧</h2>
+      <p class="info-text">覚えた単語はゴミ箱ボタンでリストから削除できます。</p>
+      
+      <div class="overview-list">
+        ${list.map(w => `
+          <div class="overview-item">
+            <div class="item-main">
+              <div class="item-word">${w.word}</div>
+              <div class="item-meaning">${w.meaning || "---"}</div>
+            </div>
+            <button class="delete-btn" onclick="removeItemFromOverview('${w.word}')">🗑️</button>
+          </div>
+        `).join("")}
+      </div>
+
+      <button class="back-link" onclick="home()">← ホームに戻る</button>
+    </div>
+  `);
+}
+
+function removeItemFromOverview(wordText) {
+  if (confirm(`「${wordText}」を見直しリストから削除しますか？`)) {
+    progress[wordText].review = false;
+    saveProgress();
+    showReviewOverview();
+  }
 }
 
 // --- Data Loading ---
@@ -94,6 +139,12 @@ function showFlash() {
   const w = words[index];
   const p = getProgress(w.word);
   
+  // 後のOverview表示のために、単語データ（意味など）をProgressに保存
+  if (p.review && !p.meaning) {
+    p.meaning = w.meaning;
+    saveProgress();
+  }
+
   const content = showBack 
     ? `<div class="card-back"><h2>${w.meaning}</h2><p class="example-text">${w.example}</p></div>` 
     : `<div class="card-front"><h1>${w.word}</h1><p class="pos-tag">${w.pos}</p></div>`;
@@ -129,7 +180,10 @@ function toggleFlash() { showBack = !showBack; showFlash(); }
 function nextFlash() { index = (index + 1) % words.length; showBack = false; showFlash(); }
 
 function markReview() {
-  getProgress(words[index].word).review = true;
+  const w = words[index];
+  const p = getProgress(w.word);
+  p.review = true;
+  p.meaning = w.meaning; // Overviewで表示するために保存
   saveProgress();
   showFlash();
 }
@@ -192,6 +246,7 @@ function selectQuiz(opt) {
   } else {
     p.wrong = true;
     p.wrongCount++;
+    p.meaning = currentWord.meaning; // 後のOverview表示のために保存
   }
   saveProgress();
   quizIndex++;
